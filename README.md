@@ -3,6 +3,7 @@
 Turn-taking manager for voice AI conversations.
 
 [![npm version](https://img.shields.io/npm/v/voice-turn.svg)](https://www.npmjs.com/package/voice-turn)
+[![npm downloads](https://img.shields.io/npm/dt/voice-turn.svg)](https://www.npmjs.com/package/voice-turn)
 [![license](https://img.shields.io/npm/l/voice-turn.svg)](https://github.com/SiluPanda/voice-turn/blob/master/LICENSE)
 [![node](https://img.shields.io/node/v/voice-turn.svg)](https://nodejs.org/)
 
