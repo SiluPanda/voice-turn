@@ -6,15 +6,15 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 ## Phase 0: Project Scaffolding and Dev Environment
 
-- [ ] **Install dev dependencies** — Add `typescript@^5.3.0`, `vitest@^1.0.0`, `eslint@^8.0.0`, and `@types/node@^20.0.0` to `devDependencies` in `package.json`. Verify `npm install` succeeds. | Status: not_done
+- [x] **Install dev dependencies** — Add `typescript@^5.3.0`, `vitest@^1.0.0`, `eslint@^8.0.0`, and `@types/node@^20.0.0` to `devDependencies` in `package.json`. Verify `npm install` succeeds. | Status: done
 
-- [ ] **Configure Vitest** — Add a `vitest.config.ts` (or configure via `vite.config.ts`) so that `npm run test` discovers and runs tests from `src/__tests__/`. Ensure test timeouts are reasonable for timer-based tests. | Status: not_done
+- [x] **Configure Vitest** — Add a `vitest.config.ts` (or configure via `vite.config.ts`) so that `npm run test` discovers and runs tests from `src/__tests__/`. Ensure test timeouts are reasonable for timer-based tests. | Status: done
 
-- [ ] **Configure ESLint** — Add `.eslintrc` (or equivalent) with a TypeScript-aware config. Verify `npm run lint` runs without errors on the empty project. | Status: not_done
+- [x] **Configure ESLint** — Add `.eslintrc` (or equivalent) with a TypeScript-aware config. Verify `npm run lint` runs without errors on the empty project. | Status: done
 
 - [ ] **Create directory structure** — Create all directories specified in SPEC Section 17: `src/endpointing/`, `src/barge-in/`, `src/pipeline/`, `src/__tests__/endpointing/`, `src/__tests__/barge-in/`, `src/__tests__/pipeline/`, `src/__tests__/mocks/`, `src/__tests__/integration/`. | Status: not_done
 
-- [ ] **Verify build pipeline** — Run `npm run build` (tsc) and confirm it produces output in `dist/` with `.js`, `.d.ts`, and `.d.ts.map` files. Fix any tsconfig issues. | Status: not_done
+- [x] **Verify build pipeline** — Run `npm run build` (tsc) and confirm it produces output in `dist/` with `.js`, `.d.ts`, and `.d.ts.map` files. Fix any tsconfig issues. | Status: done
 
 ---
 
@@ -22,17 +22,17 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 ### 1.1 Type Definitions (`src/types.ts`)
 
-- [ ] **Define TurnState type** — Create the `TurnState` union type with six states: `'idle'`, `'user-speaking'`, `'user-paused'`, `'processing'`, `'ai-speaking'`, `'interrupted'`. (Spec Section 4, 5) | Status: not_done
+- [x] **Define TurnState type** — Create the `TurnState` union type with six states: `'idle'`, `'user-speaking'`, `'user-paused'`, `'processing'`, `'ai-speaking'`, `'interrupted'`. (Spec Section 4, 5) | Status: done
 
-- [ ] **Define STTProvider interface** — Implement the `STTProvider` interface with `start()`, `stop(): Promise<string>`, `pushAudio(audio: Uint8Array | Float32Array)`, `on(event, handler)`, `off(event, handler)`, and optional `warmup?()`. (Spec Section 10, 11) | Status: not_done
+- [x] **Define STTProvider interface** — Implement the `STTProvider` interface with `start()`, `stop(): Promise<string>`, `pushAudio(audio: Uint8Array | Float32Array)`, `on(event, handler)`, `off(event, handler)`, and optional `warmup?()`. (Spec Section 10, 11) | Status: done
 
-- [ ] **Define LLMProvider interface** — Implement the `LLMProvider` interface with `generate(transcript, context?, signal?): AsyncIterable<string>` and optional `warmup?()`. (Spec Section 10, 11) | Status: not_done
+- [x] **Define LLMProvider interface** — Implement the `LLMProvider` interface with `generate(transcript, context?, signal?): AsyncIterable<string>` and optional `warmup?()`. (Spec Section 10, 11) | Status: done
 
-- [ ] **Define TTSProvider interface** — Implement the `TTSProvider` interface with `speak(text, signal?): TTSSpeakResult` and optional `warmup?()`. (Spec Section 10, 11) | Status: not_done
+- [x] **Define TTSProvider interface** — Implement the `TTSProvider` interface with `speak(text, signal?): TTSSpeakResult` and optional `warmup?()`. (Spec Section 10, 11) | Status: done
 
-- [ ] **Define TTSSpeakResult interface** — Create `TTSSpeakResult` with `audio: ReadableStream<Uint8Array>` and `cancel(): void`. (Spec Section 10) | Status: not_done
+- [x] **Define TTSSpeakResult interface** — Create `TTSSpeakResult` with `audio: ReadableStream<Uint8Array>` and `cancel(): void`. (Spec Section 10) | Status: done
 
-- [ ] **Define ConversationContext interface** — Create `ConversationContext` with optional `systemPrompt`, `messages` array (`{role, content}`), and `metadata` record. (Spec Section 10) | Status: not_done
+- [x] **Define ConversationContext interface** — Create `ConversationContext` with optional `systemPrompt`, `messages` array (`{role, content}`), and `metadata` record. (Spec Section 10) | Status: done
 
 - [ ] **Define EndpointingConfig types** — Create the discriminated union `EndpointingConfig` with all five variants: `SilenceEndpointingConfig`, `VadEndpointingConfig`, `TranscriptEndpointingConfig`, `AdaptiveEndpointingConfig`, `CustomEndpointingConfig`. Include all fields with defaults documented in JSDoc. (Spec Section 6, 10) | Status: not_done
 
@@ -42,83 +42,83 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 - [ ] **Define BargeInEvent interface** — Create `BargeInEvent` with `fullResponse`, `spokenResponse`, `interruptedAtSentence`, `userSpeech`, `aiSpeechDurationMs`. (Spec Section 7) | Status: not_done
 
-- [ ] **Define TurnManagerConfig interface** — Create `TurnManagerConfig` with all fields: `stt`, `llm`, `tts`, `endpointing?`, `bargeIn?`, `context?`, `minSpeechDurationMs?`, `minWordCount?`, `sentenceBoundaryPattern?`, `splitSentences?`, `pauseDetectionMs?`, `ttsBufferAhead?`, `maxSentenceQueueSize?`, `processingTimeoutMs?`, `llmTimeoutMs?`, `eagerLlmStart?`, `eagerLlmDelayMs?`, `signal?`. (Spec Section 10) | Status: not_done
+- [x] **Define TurnManagerConfig interface** — Create `TurnManagerConfig` with all fields: `stt`, `llm`, `tts`, `endpointing?`, `bargeIn?`, `context?`, `minSpeechDurationMs?`, `minWordCount?`, `sentenceBoundaryPattern?`, `splitSentences?`, `pauseDetectionMs?`, `ttsBufferAhead?`, `maxSentenceQueueSize?`, `processingTimeoutMs?`, `llmTimeoutMs?`, `eagerLlmStart?`, `eagerLlmDelayMs?`, `signal?`. (Spec Section 10) | Status: done
 
-- [ ] **Define TurnManager interface** — Create `TurnManager` with `start()`, `stop()`, `pushAudio()`, `getState()`, `setContext()`, typed `on()`/`off()`, `readonly isRunning`, `readonly lastTurnMetrics`. (Spec Section 10) | Status: not_done
+- [x] **Define TurnManager interface** — Create `TurnManager` with `start()`, `stop()`, `pushAudio()`, `getState()`, `setContext()`, typed `on()`/`off()`, `readonly isRunning`, `readonly lastTurnMetrics`. (Spec Section 10) | Status: done
 
-- [ ] **Define TurnManagerEvents interface** — Create `TurnManagerEvents` with all event signatures: `userSpeechStart`, `userSpeechEnd`, `aiSpeechStart`, `aiSpeechEnd`, `bargeIn`, `stateChange`, `partialTranscript`, `transcript`, `response`, `audioOutput`, `turnComplete`, `error`. (Spec Section 10) | Status: not_done
+- [x] **Define TurnManagerEvents interface** — Create `TurnManagerEvents` with all event signatures: `userSpeechStart`, `userSpeechEnd`, `aiSpeechStart`, `aiSpeechEnd`, `bargeIn`, `stateChange`, `partialTranscript`, `transcript`, `response`, `audioOutput`, `turnComplete`, `error`. (Spec Section 10) | Status: done
 
-- [ ] **Define TurnMetrics interface** — Create `TurnMetrics` with all timing fields: `endpointingMs`, `sttFinalizationMs`, `llmTtftMs`, `llmTotalMs`, `ttsFirstChunkMs`, `userToAiMs`, `totalResponseMs`, `sentenceCount`, `userWordCount`, `aiWordCount`, `wasInterrupted`. (Spec Section 9) | Status: not_done
+- [x] **Define TurnMetrics interface** — Create `TurnMetrics` with all timing fields: `endpointingMs`, `sttFinalizationMs`, `llmTtftMs`, `llmTotalMs`, `ttsFirstChunkMs`, `userToAiMs`, `totalResponseMs`, `sentenceCount`, `userWordCount`, `aiWordCount`, `wasInterrupted`. (Spec Section 9) | Status: done
 
 - [ ] **Define TurnError interface** — Create `TurnError` with `stage` (`'stt' | 'llm' | 'tts' | 'endpointing' | 'internal'`), `cause: Error`, `message: string`, `stateAtError: TurnState`. (Spec Section 10) | Status: not_done
 
 ### 1.2 Typed Event Emitter (`src/events.ts`)
 
-- [ ] **Implement typed event emitter** — Build a lightweight typed event emitter (~30 lines) using `Map<string, Set<Function>>` with `on()`, `off()`, and `emit()` methods. Must provide full TypeScript type safety for all events defined in `TurnManagerEvents`. Do not use Node.js `EventEmitter`. (Spec Section 16) | Status: not_done
+- [x] **Implement typed event emitter** — Build a lightweight typed event emitter (~30 lines) using `Map<string, Set<Function>>` with `on()`, `off()`, and `emit()` methods. Must provide full TypeScript type safety for all events defined in `TurnManagerEvents`. Do not use Node.js `EventEmitter`. (Spec Section 16) | Status: done
 
-- [ ] **Test event emitter** — Write unit tests: registering handlers, emitting events, removing handlers, multiple handlers per event, emitting with correct typed arguments, emitting unknown event is no-op, off() for unregistered handler is no-op. | Status: not_done
+- [x] **Test event emitter** — Write unit tests: registering handlers, emitting events, removing handlers, multiple handlers per event, emitting with correct typed arguments, emitting unknown event is no-op, off() for unregistered handler is no-op. | Status: done
 
 ### 1.3 State Machine (`src/state-machine.ts`)
 
-- [ ] **Implement state machine core** — Build the turn-taking state machine that tracks current state and validates/executes transitions. Initial state is `idle`. Only valid transitions (per Spec Section 5 table) are allowed. Invalid transitions emit an error. (Spec Section 5) | Status: not_done
+- [x] **Implement state machine core** — Build the turn-taking state machine that tracks current state and validates/executes transitions. Initial state is `idle`. Only valid transitions (per Spec Section 5 table) are allowed. Invalid transitions emit an error. (Spec Section 5) | Status: done
 
-- [ ] **Implement idle to user-speaking transition** — Triggered by speech detection. Actions: start STT provider, begin streaming audio to STT. | Status: not_done
+- [x] **Implement idle to user-speaking transition** — Triggered by speech detection. Actions: start STT provider, begin streaming audio to STT. | Status: done
 
-- [ ] **Implement user-speaking to user-paused transition** — Triggered by silence detection (no speech for `pauseDetectionMs`, default 300ms). Actions: start endpointing timer, continue STT. | Status: not_done
+- [x] **Implement user-speaking to user-paused transition** — Triggered by silence detection (no speech for `pauseDetectionMs`, default 300ms). Actions: start endpointing timer, continue STT. | Status: done
 
-- [ ] **Implement user-paused to user-speaking transition** — Triggered by speech resuming before endpointing timer expires. Actions: cancel endpointing timer, continue STT. | Status: not_done
+- [x] **Implement user-paused to user-speaking transition** — Triggered by speech resuming before endpointing timer expires. Actions: cancel endpointing timer, continue STT. | Status: done
 
-- [ ] **Implement user-paused to processing transition** — Triggered by endpointing timer expiring. Actions: stop STT, finalize transcript, send to LLM. | Status: not_done
+- [x] **Implement user-paused to processing transition** — Triggered by endpointing timer expiring. Actions: stop STT, finalize transcript, send to LLM. | Status: done
 
-- [ ] **Implement processing to ai-speaking transition** — Triggered by first TTS audio chunk ready. Actions: begin audio playback, emit `aiSpeechStart`. | Status: not_done
+- [x] **Implement processing to ai-speaking transition** — Triggered by first TTS audio chunk ready. Actions: begin audio playback, emit `aiSpeechStart`. | Status: done
 
-- [ ] **Implement ai-speaking to idle transition** — Triggered by TTS playback complete. Actions: emit `aiSpeechEnd`, return to waiting. | Status: not_done
+- [x] **Implement ai-speaking to idle transition** — Triggered by TTS playback complete. Actions: emit `aiSpeechEnd`, return to waiting. | Status: done
 
-- [ ] **Implement ai-speaking to interrupted transition** — Triggered by user speech during AI playback (barge-in). Actions depend on barge-in mode. | Status: not_done
+- [x] **Implement ai-speaking to interrupted transition** — Triggered by user speech during AI playback (barge-in). Actions depend on barge-in mode. | Status: done
 
-- [ ] **Implement interrupted to user-speaking transition** — Triggered by cancellation of AI speech/LLM/TTS complete. Actions: start STT for new user speech, emit `bargeIn`. | Status: not_done
+- [x] **Implement interrupted to user-speaking transition** — Triggered by cancellation of AI speech/LLM/TTS complete. Actions: start STT for new user speech, emit `bargeIn`. | Status: done
 
-- [ ] **Implement timeout and recovery transitions** — `processing` -> `idle` on LLM/TTS error or processing timeout. `ai-speaking` -> `idle` on playback error. `user-speaking` -> `idle` on STT error. Any state -> `idle` on `stop()`. (Spec Section 5) | Status: not_done
+- [x] **Implement timeout and recovery transitions** — `processing` -> `idle` on LLM/TTS error or processing timeout. `ai-speaking` -> `idle` on playback error. `user-speaking` -> `idle` on STT error. Any state -> `idle` on `stop()`. (Spec Section 5) | Status: done
 
-- [ ] **Enforce state invariants** — Ensure: exactly one state at a time; `user-speaking` and `ai-speaking` never simultaneous; `interrupted` is transient (always transitions to `user-speaking`); `processing` always leads to `ai-speaking` or `idle`; STT only active during `user-speaking`/`user-paused`; TTS only during `processing`/`ai-speaking`; LLM only during `processing`/`ai-speaking`. (Spec Section 5) | Status: not_done
+- [x] **Enforce state invariants** — Ensure: exactly one state at a time; `user-speaking` and `ai-speaking` never simultaneous; `interrupted` is transient (always transitions to `user-speaking`); `processing` always leads to `ai-speaking` or `idle`; STT only active during `user-speaking`/`user-paused`; TTS only during `processing`/`ai-speaking`; LLM only during `processing`/`ai-speaking`. (Spec Section 5) | Status: done
 
-- [ ] **Reject invalid state transitions** — When an invalid transition is attempted, emit an error event with descriptive message and do not change state. | Status: not_done
+- [x] **Reject invalid state transitions** — When an invalid transition is attempted, emit an error event with descriptive message and do not change state. | Status: done
 
-- [ ] **Test state machine — valid transitions** — Unit tests for every valid transition in the state table (Spec Section 5). Verify correct state after each transition and that appropriate events fire. | Status: not_done
+- [x] **Test state machine — valid transitions** — Unit tests for every valid transition in the state table (Spec Section 5). Verify correct state after each transition and that appropriate events fire. | Status: done
 
-- [ ] **Test state machine — invalid transitions** — Unit tests that verify invalid transitions (e.g., `idle` -> `processing`, `user-speaking` -> `ai-speaking`) are rejected and emit errors. | Status: not_done
+- [x] **Test state machine — invalid transitions** — Unit tests that verify invalid transitions (e.g., `idle` -> `processing`, `user-speaking` -> `ai-speaking`) are rejected and emit errors. | Status: done
 
 - [ ] **Test state machine — stop() from every state** — Verify `stop()` transitions to `idle` from each of the six states and cleans up timers/operations. | Status: not_done
 
 ### 1.4 TurnManager Shell (`src/turn-manager.ts`)
 
-- [ ] **Implement createTurnManager factory function** — Accept `TurnManagerConfig`, validate required fields (`stt`, `llm`, `tts`), apply defaults for all optional config (Spec Section 12 defaults table), instantiate and return a `TurnManager`. | Status: not_done
+- [x] **Implement createTurnManager factory function** — Accept `TurnManagerConfig`, validate required fields (`stt`, `llm`, `tts`), apply defaults for all optional config (Spec Section 12 defaults table), instantiate and return a `TurnManager`. | Status: done
 
-- [ ] **Implement start() method** — Transition from uninitialized to `idle`. Set `isRunning` to true. Begin accepting `pushAudio()` calls. | Status: not_done
+- [x] **Implement start() method** — Transition from uninitialized to `idle`. Set `isRunning` to true. Begin accepting `pushAudio()` calls. | Status: done
 
-- [ ] **Implement stop() method** — Cancel all in-flight operations (abort LLM, cancel TTS, stop STT). Clear all timers. Transition to `idle`. Set `isRunning` to false. Can be called from any state. | Status: not_done
+- [x] **Implement stop() method** — Cancel all in-flight operations (abort LLM, cancel TTS, stop STT). Clear all timers. Transition to `idle`. Set `isRunning` to false. Can be called from any state. | Status: done
 
-- [ ] **Implement pushAudio() method** — Route audio data to STT provider and VAD system. No-op if not in `user-speaking` or `user-paused` state (or if not running). Must not crash if called before `start()`. (Spec Section 14 edge case) | Status: not_done
+- [x] **Implement pushAudio() method** — Route audio data to STT provider and VAD system. No-op if not in `user-speaking` or `user-paused` state (or if not running). Must not crash if called before `start()`. (Spec Section 14 edge case) | Status: done
 
-- [ ] **Implement getState() method** — Return the current `TurnState`. | Status: not_done
+- [x] **Implement getState() method** — Return the current `TurnState`. | Status: done
 
-- [ ] **Implement setContext() method** — Update the `ConversationContext` passed to the LLM provider. Takes effect on the next LLM invocation. | Status: not_done
+- [x] **Implement setContext() method** — Update the `ConversationContext` passed to the LLM provider. Takes effect on the next LLM invocation. | Status: done
 
-- [ ] **Implement isRunning property** — Read-only boolean reflecting whether `start()` has been called and `stop()` has not. | Status: not_done
+- [x] **Implement isRunning property** — Read-only boolean reflecting whether `start()` has been called and `stop()` has not. | Status: done
 
-- [ ] **Implement lastTurnMetrics property** — Read-only property returning `TurnMetrics` from the most recent completed turn, or `null` if no turn has completed. | Status: not_done
+- [x] **Implement lastTurnMetrics property** — Read-only property returning `TurnMetrics` from the most recent completed turn, or `null` if no turn has completed. | Status: done
 
-- [ ] **Wire event emitter to TurnManager** — Expose typed `on()` and `off()` methods that delegate to the internal event emitter. Return `this` from `on()`/`off()` for chaining. | Status: not_done
+- [x] **Wire event emitter to TurnManager** — Expose typed `on()` and `off()` methods that delegate to the internal event emitter. Return `this` from `on()`/`off()` for chaining. | Status: done
 
-- [ ] **Apply default configuration values** — Set defaults for all optional config fields per Spec Section 12 defaults table: `endpointing: { strategy: 'silence', silenceMs: 800 }`, `bargeIn: { mode: 'full', minSpeechForBargeIn: 200 }`, `minSpeechDurationMs: 300`, `minWordCount: 0`, `sentenceBoundaryPattern: /(?<=[.!?])\s+/`, `pauseDetectionMs: 300`, `ttsBufferAhead: 1`, `maxSentenceQueueSize: 10`, `processingTimeoutMs: 30000`, `llmTimeoutMs: 15000`, `eagerLlmStart: false`, `eagerLlmDelayMs: 500`. | Status: not_done
+- [x] **Apply default configuration values** — Set defaults for all optional config fields per Spec Section 12 defaults table: `endpointing: { strategy: 'silence', silenceMs: 800 }`, `bargeIn: { mode: 'full', minSpeechForBargeIn: 200 }`, `minSpeechDurationMs: 300`, `minWordCount: 0`, `sentenceBoundaryPattern: /(?<=[.!?])\s+/`, `pauseDetectionMs: 300`, `ttsBufferAhead: 1`, `maxSentenceQueueSize: 10`, `processingTimeoutMs: 30000`, `llmTimeoutMs: 15000`, `eagerLlmStart: false`, `eagerLlmDelayMs: 500`. | Status: done
 
 ### 1.5 Silence Endpointing (`src/endpointing/silence.ts`)
 
-- [ ] **Implement silence-based endpointing** — When silence is detected, start a timer for `silenceMs` (default 800ms). If speech resumes, cancel the timer. If the timer expires, trigger end-of-turn (transition to `processing`). (Spec Section 6) | Status: not_done
+- [x] **Implement silence-based endpointing** — When silence is detected, start a timer for `silenceMs` (default 800ms). If speech resumes, cancel the timer. If the timer expires, trigger end-of-turn (transition to `processing`). (Spec Section 6) | Status: done
 
 - [ ] **Implement pause detection threshold** — Only consider silence as a potential endpoint if silence duration exceeds `pauseDetectionMs` (default 300ms). Shorter silences are ignored. | Status: not_done
 
-- [ ] **Implement minimum speech duration guard** — User must have spoken for at least `minSpeechDurationMs` (default 300ms) before endpointing is considered. Brief sounds (coughs, mic bumps) do not trigger turn cycles. (Spec Section 6) | Status: not_done
+- [x] **Implement minimum speech duration guard** — User must have spoken for at least `minSpeechDurationMs` (default 300ms) before endpointing is considered. Brief sounds (coughs, mic bumps) do not trigger turn cycles. (Spec Section 6) | Status: done
 
 - [ ] **Implement minimum word count guard** — Transcript must contain at least `minWordCount` (default 0, disabled) words before endpointing triggers. (Spec Section 6) | Status: not_done
 
@@ -134,7 +134,7 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 ### 1.6 Public API Exports (`src/index.ts`)
 
-- [ ] **Set up public exports** — Export `createTurnManager` function and all public types: `TurnState`, `STTProvider`, `LLMProvider`, `TTSProvider`, `TTSSpeakResult`, `ConversationContext`, `TurnManagerConfig`, `TurnManager`, `TurnManagerEvents`, `TurnMetrics`, `TurnError`, `BargeInEvent`, `EndpointingConfig` (and variants), `BargeInConfig` (and variants), `EndpointingContext`. (Spec Section 10) | Status: not_done
+- [x] **Set up public exports** — Export `createTurnManager` function and all public types: `TurnState`, `STTProvider`, `LLMProvider`, `TTSProvider`, `TTSSpeakResult`, `ConversationContext`, `TurnManagerConfig`, `TurnManager`, `TurnManagerEvents`, `TurnMetrics`, `TurnError`, `BargeInEvent`, `EndpointingConfig` (and variants), `BargeInConfig` (and variants), `EndpointingContext`. (Spec Section 10) | Status: done
 
 ---
 
@@ -142,23 +142,23 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 ### 2.1 Sentence Splitter (`src/pipeline/sentence-splitter.ts`)
 
-- [ ] **Implement sentence boundary detector** — Build a streaming sentence splitter that buffers incoming LLM tokens and emits complete sentences when boundaries are detected. Default boundary pattern: `/(?<=[.!?])\s+/`. Flush remaining buffer on stream end. (Spec Section 8) | Status: not_done
+- [x] **Implement sentence boundary detector** — Build a streaming sentence splitter that buffers incoming LLM tokens and emits complete sentences when boundaries are detected. Default boundary pattern: `/(?<=[.!?])\s+/`. Flush remaining buffer on stream end. (Spec Section 8) | Status: done
 
 - [ ] **Support configurable sentence boundary pattern** — Accept a custom `sentenceBoundaryPattern` regex from config. | Status: not_done
 
 - [ ] **Support custom splitSentences function** — Accept a custom `splitSentences` function that overrides regex-based splitting. (Spec Section 10) | Status: not_done
 
-- [ ] **Test sentence splitter — single sentence** — `"Hello."` produces `["Hello."]`. | Status: not_done
+- [x] **Test sentence splitter — single sentence** — `"Hello."` produces `["Hello."]`. | Status: done
 
-- [ ] **Test sentence splitter — multiple sentences** — `"Hello. How are you?"` produces `["Hello.", "How are you?"]`. | Status: not_done
+- [x] **Test sentence splitter — multiple sentences** — `"Hello. How are you?"` produces `["Hello.", "How are you?"]`. | Status: done
 
-- [ ] **Test sentence splitter — abbreviations** — `"Dr. Smith is here."` is handled correctly (not split at `"Dr."`). | Status: not_done
+- [x] **Test sentence splitter — abbreviations** — `"Dr. Smith is here."` is handled correctly (not split at `"Dr."`). | Status: done
 
-- [ ] **Test sentence splitter — trailing text without punctuation** — `"Hello world"` is emitted on stream end. | Status: not_done
+- [x] **Test sentence splitter — trailing text without punctuation** — `"Hello world"` is emitted on stream end. | Status: done
 
-- [ ] **Test sentence splitter — empty input** — No sentences emitted. | Status: not_done
+- [x] **Test sentence splitter — empty input** — No sentences emitted. | Status: done
 
-- [ ] **Test sentence splitter — long single sentence** — Treated as one sentence, emitted on stream end. | Status: not_done
+- [x] **Test sentence splitter — long single sentence** — Treated as one sentence, emitted on stream end. | Status: done
 
 - [ ] **Test sentence splitter — streaming token accumulation** — Tokens arrive one at a time; sentences are emitted only when boundaries are detected. | Status: not_done
 
@@ -182,17 +182,17 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 ### 2.3 Pipeline Orchestration (`src/pipeline/index.ts`)
 
-- [ ] **Implement STT-to-LLM connection** — When endpointing confirms end-of-turn, finalize STT transcript and pass to LLM provider's `generate()` method with conversation context and AbortSignal. (Spec Section 8) | Status: not_done
+- [x] **Implement STT-to-LLM connection** — When endpointing confirms end-of-turn, finalize STT transcript and pass to LLM provider's `generate()` method with conversation context and AbortSignal. (Spec Section 8) | Status: done
 
-- [ ] **Implement LLM-to-TTS connection** — Consume LLM async iterable, pass tokens through sentence splitter, forward complete sentences to TTS queue. (Spec Section 8) | Status: not_done
+- [x] **Implement LLM-to-TTS connection** — Consume LLM async iterable, pass tokens through sentence splitter, forward complete sentences to TTS queue. (Spec Section 8) | Status: done
 
 - [ ] **Implement TTS-to-audioOutput connection** — As TTS produces audio chunks, emit them via the `audioOutput` event for the application to play. (Spec Section 8) | Status: not_done
 
 - [ ] **Implement streaming at every stage** — Ensure LLM generation begins before STT fully finalizes (overlap), TTS begins before LLM finishes generating, and audio playback begins before TTS finishes synthesizing. (Spec Section 9) | Status: not_done
 
-- [ ] **Implement transcript event forwarding** — Forward STT `partial` events as `partialTranscript` events and STT `transcript` events as `transcript` events on the TurnManager. | Status: not_done
+- [x] **Implement transcript event forwarding** — Forward STT `partial` events as `partialTranscript` events and STT `transcript` events as `transcript` events on the TurnManager. | Status: done
 
-- [ ] **Implement response event emission** — Emit `response` events as LLM response tokens accumulate. | Status: not_done
+- [x] **Implement response event emission** — Emit `response` events as LLM response tokens accumulate. | Status: done
 
 - [ ] **Test pipeline — full turn cycle** — Mock STT produces transcript -> LLM generates response -> sentence splitter splits -> TTS synthesizes -> audioOutput events fire. Verify correct event sequence. | Status: not_done
 
@@ -200,9 +200,9 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 ### 2.4 Full Barge-In (`src/barge-in/full.ts`)
 
-- [ ] **Implement full barge-in handler** — When user speech is detected during `ai-speaking` and persists for `minSpeechForBargeIn` (default 200ms): (1) transition to `interrupted`, (2) stop TTS playback via `cancel()`, (3) cancel pending TTS synthesis, (4) abort LLM generation via AbortSignal, (5) start STT for new user speech, (6) transition to `user-speaking`, (7) emit `bargeIn` event. Target: under 200ms total interruption latency. (Spec Section 7) | Status: not_done
+- [x] **Implement full barge-in handler** — When user speech is detected during `ai-speaking` and persists for `minSpeechForBargeIn` (default 200ms): (1) transition to `interrupted`, (2) stop TTS playback via `cancel()`, (3) cancel pending TTS synthesis, (4) abort LLM generation via AbortSignal, (5) start STT for new user speech, (6) transition to `user-speaking`, (7) emit `bargeIn` event. Target: under 200ms total interruption latency. (Spec Section 7) | Status: done
 
-- [ ] **Implement barge-in cancellation sequence** — Execute the five-step cancellation sequence (stop TTS playback, cancel TTS synthesis, abort LLM, record interruption point, start STT). Target: under 100ms. (Spec Section 7) | Status: not_done
+- [x] **Implement barge-in cancellation sequence** — Execute the five-step cancellation sequence (stop TTS playback, cancel TTS synthesis, abort LLM, record interruption point, start STT). Target: under 100ms. (Spec Section 7) | Status: done
 
 - [ ] **Implement BargeInEvent construction** — Populate `BargeInEvent` with `fullResponse`, `spokenResponse`, `interruptedAtSentence`, `userSpeech`, `aiSpeechDurationMs`. Track which sentences were spoken vs. unspoken. (Spec Section 7) | Status: not_done
 
@@ -224,9 +224,9 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 - [ ] **Implement latency measurement** — Track timestamps at each pipeline stage boundary and compute all `TurnMetrics` fields: `endpointingMs`, `sttFinalizationMs`, `llmTtftMs`, `llmTotalMs`, `ttsFirstChunkMs`, `userToAiMs`, `totalResponseMs`, `sentenceCount`, `userWordCount`, `aiWordCount`, `wasInterrupted`. (Spec Section 9) | Status: not_done
 
-- [ ] **Emit turnComplete event** — Fire `turnComplete` with populated `TurnMetrics` after each completed turn (both normal completion and interrupted turns). | Status: not_done
+- [x] **Emit turnComplete event** — Fire `turnComplete` with populated `TurnMetrics` after each completed turn (both normal completion and interrupted turns). | Status: done
 
-- [ ] **Store lastTurnMetrics** — Update `lastTurnMetrics` property on the TurnManager after each completed turn. | Status: not_done
+- [x] **Store lastTurnMetrics** — Update `lastTurnMetrics` property on the TurnManager after each completed turn. | Status: done
 
 - [ ] **Test metrics — plausible values** — Verify all metrics are positive and in expected ranges with mock providers. | Status: not_done
 
@@ -244,15 +244,15 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 ### 2.7 Pipeline Error Handling
 
-- [ ] **Handle STT errors** — When STT provider throws or emits an error, emit `error` event with STT context and transition to `idle`. (Spec Section 8) | Status: not_done
+- [x] **Handle STT errors** — When STT provider throws or emits an error, emit `error` event with STT context and transition to `idle`. (Spec Section 8) | Status: done
 
-- [ ] **Handle LLM errors** — When LLM provider throws or the async iterable errors, emit `error` event with LLM context and transition to `idle`. (Spec Section 8) | Status: not_done
+- [x] **Handle LLM errors** — When LLM provider throws or the async iterable errors, emit `error` event with LLM context and transition to `idle`. (Spec Section 8) | Status: done
 
 - [ ] **Handle LLM timeout** — If no LLM tokens arrive within `llmTimeoutMs` (default 15000ms), abort the LLM request, emit `error` event, and transition to `idle`. (Spec Section 8) | Status: not_done
 
 - [ ] **Handle TTS errors — skip failed sentence** — When TTS fails for one sentence, skip it. If more sentences remain, continue with the next. If no sentences remain, emit `error` and transition to `idle`. (Spec Section 8) | Status: not_done
 
-- [ ] **Handle processing timeout** — If total processing exceeds `processingTimeoutMs` (default 30000ms), abort all operations, emit `error` event, and transition to `idle`. (Spec Section 5) | Status: not_done
+- [x] **Handle processing timeout** — If total processing exceeds `processingTimeoutMs` (default 30000ms), abort all operations, emit `error` event, and transition to `idle`. (Spec Section 5) | Status: done
 
 - [ ] **Handle TTS playback error** — Emit `error` event and transition to `idle`. | Status: not_done
 
@@ -358,13 +358,13 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 - [ ] **Handle stop() during processing while LLM is generating** — LLM is aborted via AbortSignal. | Status: not_done
 
-- [ ] **Handle pushAudio() before start()** — No crash. Audio is silently ignored. | Status: not_done
+- [x] **Handle pushAudio() before start()** — No crash. Audio is silently ignored. | Status: done
 
 - [ ] **Handle provider throws synchronously in start()** — Error event emitted, state returns to `idle`. | Status: not_done
 
 ### 4.2 AbortSignal Support
 
-- [ ] **Implement external AbortSignal** — Accept an `AbortSignal` via `TurnManagerConfig.signal`. When the signal fires, execute a full `stop()` sequence (cancel all in-flight operations, clean up resources, transition to `idle`). (Spec Section 10) | Status: not_done
+- [x] **Implement external AbortSignal** — Accept an `AbortSignal` via `TurnManagerConfig.signal`. When the signal fires, execute a full `stop()` sequence (cancel all in-flight operations, clean up resources, transition to `idle`). (Spec Section 10) | Status: done
 
 - [ ] **Test AbortSignal — cancels running manager** — External abort stops the manager from any state. | Status: not_done
 
@@ -414,7 +414,7 @@ All tasks derived from [SPEC.md](./SPEC.md). Organized by implementation phase m
 
 - [ ] **Verify npm pack output** — Run `npm pack --dry-run` and verify only `dist/` is included. No source files, test files, or config files leak into the package. | Status: not_done
 
-- [ ] **Verify zero runtime dependencies** — Confirm `package.json` has no `dependencies` field (or it is empty). All code is self-contained. (Spec Section 16) | Status: not_done
+- [x] **Verify zero runtime dependencies** — Confirm `package.json` has no `dependencies` field (or it is empty). All code is self-contained. (Spec Section 16) | Status: done
 
 - [ ] **Verify TypeScript declaration files** — Run `npm run build` and confirm `.d.ts` files are generated in `dist/`. Verify a consuming project can import types correctly. | Status: not_done
 
