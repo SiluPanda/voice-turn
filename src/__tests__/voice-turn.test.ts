@@ -315,10 +315,11 @@ describe('splitSentences', () => {
     expect(result.some((s) => s.includes('Dr.'))).toBe(true)
   })
 
-  it('filters out sentences shorter than 10 chars', () => {
+  it('preserves short sentences like "Hi."', () => {
     const result = splitSentences('Hi. This is a complete sentence here.')
-    // "Hi." is 3 chars — should be filtered
-    expect(result.every((s) => s.length >= 10)).toBe(true)
+    // Short sentences should NOT be filtered — "Hi." is a valid sentence
+    expect(result[0]).toBe('Hi.')
+    expect(result.length).toBe(2)
   })
 
   it('returns trimmed sentences', () => {
