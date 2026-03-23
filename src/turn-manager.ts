@@ -282,7 +282,7 @@ export function createTurnManager(config: TurnManagerConfig): TurnManager {
       const hasEnergy = hasAudioEnergy(audio)
       if (hasEnergy) {
         const speakingDurationMs = Date.now() - speechStartTime
-        if (speakingDurationMs >= minInterruptionMs || true) {
+        if (speakingDurationMs >= minInterruptionMs) {
           // Cancel current TTS
           const interruptedText = accumulatedResponseText
           abortController?.abort()

@@ -5,7 +5,7 @@ const ABBREVIATIONS = new Set([
   'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'st', 'ave', 'blvd',
 ])
 
-const MIN_SENTENCE_LENGTH = 10
+const MIN_SENTENCE_LENGTH = 1
 
 /**
  * Split text into sentences on . ! ? followed by whitespace or end of string.
