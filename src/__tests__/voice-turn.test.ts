@@ -177,6 +177,81 @@ describe('createTurnManager', () => {
 
     expect(handler).toHaveBeenCalledWith('hel')
   })
+
+  it('barge-in rejects interruption when AI has been speaking for less than minInterruptionMs', async () => {
+    // Use a TTS that never finishes so we stay in ai-speaking state
+    const longTTS: TTSProvider = {
+      speak: vi.fn().mockReturnValue({
+        audio: new ReadableStream({
+          // Never close — simulates ongoing audio playback
+          start() {},
+        }),
+        cancel: vi.fn(),
+      }),
+    }
+
+    // LLM that yields one chunk immediately
+    const fastLLM: LLMProvider = {
+      generate: vi.fn().mockImplementation(async function* () {
+        yield 'Hello there!'
+      }),
+    }
+
+    const minInterruptionMs = 500
+
+    const tm = createTurnManager({
+      stt,
+      llm: fastLLM,
+      tts: longTTS,
+      bargeIn: { enabled: true, minInterruptionMs },
+      splitSentences: true,
+      endpointing: { silenceMs: 50, minSpeechMs: 0 },
+    })
+
+    const bargeInHandler = vi.fn()
+    tm.on('bargeIn', bargeInHandler)
+
+    tm.start()
+
+    // Simulate user speech-start, then speech-end
+    const speechStartCall = (stt.on as ReturnType<typeof vi.fn>).mock.calls.find(
+      (c: unknown[]) => c[0] === 'speech-start'
+    )
+    const speechEndCall = (stt.on as ReturnType<typeof vi.fn>).mock.calls.find(
+      (c: unknown[]) => c[0] === 'speech-end'
+    )
+
+    const fireSpeechStart = speechStartCall![1] as () => void
+    const fireSpeechEnd = speechEndCall![1] as () => void
+
+    fireSpeechStart()
+    fireSpeechEnd()
+
+    // Wait for silence timer + async processing to reach ai-speaking state
+    await vi.waitFor(() => {
+      expect(tm.getState()).toBe('ai-speaking')
+    }, { timeout: 2000 })
+
+    // AI just started speaking — push audio with energy immediately (< minInterruptionMs)
+    const loudAudio = new Float32Array([0.5, -0.5, 0.3])
+    tm.pushAudio(loudAudio)
+
+    // Barge-in should NOT have fired because AI has been speaking < 500ms
+    expect(bargeInHandler).not.toHaveBeenCalled()
+    expect(tm.getState()).toBe('ai-speaking')
+
+    // Now wait until minInterruptionMs has passed
+    await new Promise((resolve) => setTimeout(resolve, minInterruptionMs + 50))
+
+    // Push audio with energy again — now barge-in should fire
+    tm.pushAudio(loudAudio)
+
+    expect(bargeInHandler).toHaveBeenCalledOnce()
+    expect(tm.getState()).toBe('user-speaking')
+
+    // Clean up
+    tm.stop()
+  })
 })
 
 // ---- State machine tests ----
