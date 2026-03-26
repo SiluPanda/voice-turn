@@ -31,6 +31,7 @@ export function createTurnManager(config: TurnManagerConfig): TurnManager {
   let processingStartTime = 0
   let turnStartTime = 0
   let firstAudioTime = 0
+  let aiSpeakingStartTime = 0
   let silenceTimer: ReturnType<typeof setTimeout> | null = null
 
   function transition(newState: TurnState): void {
@@ -101,6 +102,7 @@ export function createTurnManager(config: TurnManagerConfig): TurnManager {
         let pendingText = ''
 
         transition('ai-speaking')
+        aiSpeakingStartTime = Date.now()
         emitter.emit('aiSpeechStart')
 
         for await (const chunk of config.llm.generate(transcript, context, signal)) {
@@ -143,6 +145,7 @@ export function createTurnManager(config: TurnManagerConfig): TurnManager {
 
         if (!signal.aborted && fullResponse.trim().length > 0) {
           transition('ai-speaking')
+          aiSpeakingStartTime = Date.now()
           emitter.emit('aiSpeechStart')
           await _speakText(fullResponse.trim(), signal)
         }
@@ -281,7 +284,7 @@ export function createTurnManager(config: TurnManagerConfig): TurnManager {
       // Use a simple heuristic: if audio chunk has non-zero energy
       const hasEnergy = hasAudioEnergy(audio)
       if (hasEnergy) {
-        const speakingDurationMs = Date.now() - speechStartTime
+        const speakingDurationMs = Date.now() - aiSpeakingStartTime
         if (speakingDurationMs >= minInterruptionMs) {
           // Cancel current TTS
           const interruptedText = accumulatedResponseText
